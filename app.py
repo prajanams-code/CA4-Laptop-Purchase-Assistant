@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 import pandas as pd
 import re
@@ -21,25 +22,38 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-.main {
-    background-color: #f7f9fc;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
 }
 
+.stApp {
+    background:
+        radial-gradient(circle at 10% 10%, rgba(99,102,241,0.18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(14,165,233,0.15), transparent 30%),
+        linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
+}
+
+/* Remove unnecessary top padding */
 .block-container {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     padding-bottom: 3rem;
 }
 
+/* HERO */
 .hero {
-    background: linear-gradient(135deg, #111827, #2563eb);
-    padding: 35px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #111827, #312e81, #2563eb);
+    padding: 42px;
+    border-radius: 28px;
     color: white;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 50px rgba(37, 99, 235, 0.25);
 }
 
 .hero h1 {
-    font-size: 42px;
+    font-size: 46px;
+    font-weight: 800;
     margin-bottom: 8px;
 }
 
@@ -48,67 +62,145 @@ st.markdown("""
     opacity: 0.92;
 }
 
-.product-card {
-    background: white;
-    border-radius: 18px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0px 5px 18px rgba(0,0,0,0.08);
-    border: 1px solid #e5e7eb;
+.hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    margin-bottom: 15px;
 }
 
-.product-title {
-    font-size: 20px;
-    font-weight: 700;
+/* SECTION TITLES */
+
+.section-title {
+    font-size: 27px;
+    font-weight: 800;
     color: #111827;
+    margin-top: 30px;
+    margin-bottom: 18px;
 }
 
-.product-brand {
-    color: #6b7280;
-    font-size: 14px;
+/* STAT CARDS */
+
+.stat-card {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.8);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(15,23,42,0.07);
+    text-align: center;
 }
 
-.product-price {
-    font-size: 24px;
+.stat-number {
+    font-size: 28px;
     font-weight: 800;
     color: #2563eb;
 }
 
+.stat-label {
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* PRODUCT CARDS */
+
+.product-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+    padding: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+    transition: all 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(37,99,235,0.15);
+}
+
+.product-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 10px;
+}
+
+.product-brand {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.product-price {
+    font-size: 25px;
+    font-weight: 800;
+    color: #2563eb;
+    margin: 8px 0;
+}
+
+.product-info {
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 12px;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
 .rating {
     color: #f59e0b;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-.feature-box {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0px 3px 12px rgba(0,0,0,0.05);
-}
+/* CHAT */
 
 .chat-user {
-    background: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
     color: white;
-    padding: 12px 16px;
-    border-radius: 15px;
+    padding: 13px 17px;
+    border-radius: 18px 18px 5px 18px;
     margin: 8px 0;
+    margin-left: 15%;
 }
 
 .chat-bot {
-    background: #eef2ff;
+    background: white;
     color: #111827;
-    padding: 12px 16px;
-    border-radius: 15px;
+    padding: 15px 18px;
+    border-radius: 18px 18px 18px 5px;
     margin: 8px 0;
+    margin-right: 15%;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 5px 18px rgba(15,23,42,0.06);
 }
 
-.section-title {
-    font-size: 28px;
-    font-weight: 750;
-    margin-top: 30px;
-    margin-bottom: 15px;
+/* FILTER BOX */
+
+.filter-box {
+    background: rgba(255,255,255,0.9);
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+}
+
+/* INFO BOX */
+
+.info-box {
+    background: linear-gradient(135deg, #eef2ff, #eff6ff);
+    border: 1px solid #c7d2fe;
+    border-radius: 18px;
+    padding: 18px;
+    margin: 10px 0;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    padding: 30px;
+    margin-top: 40px;
 }
 
 </style>
@@ -116,7 +208,7 @@ st.markdown("""
 
 
 # ============================================================
-# PRODUCT DATA
+# PRODUCT DATABASE
 # ============================================================
 
 products = [
@@ -222,7 +314,7 @@ product_df = pd.DataFrame(products)
 
 
 # ============================================================
-# CUSTOMER REVIEWS
+# REVIEWS
 # ============================================================
 
 reviews = [
@@ -287,7 +379,7 @@ intents = {
 
     "BUDGET": [
         "budget", "price", "cost",
-        "under", "afford"
+        "under", "afford", "cheap"
     ],
 
     "PROCESSOR": [
@@ -309,12 +401,17 @@ intents = {
 
     "RECOMMENDATION": [
         "recommend", "suggest",
-        "best", "suitable"
+        "best", "suitable", "which laptop"
     ],
 
     "REVIEW_QUERY": [
         "review", "reviews",
         "rating", "feedback"
+    ],
+
+    "COMPARISON": [
+        "compare", "comparison",
+        "difference", "versus", "vs"
     ],
 
     "GOODBYE": [
@@ -421,26 +518,26 @@ def extract_use_case(text):
 
     text = text.lower()
 
-    if "gaming" in text:
+    if any(word in text for word in ["gaming", "gamer", "games"]):
         return "Gaming"
 
-    if "coding" in text or "programming" in text:
+    if any(word in text for word in ["coding", "programming", "developer"]):
         return "Coding"
 
-    if "design" in text or "editing" in text:
+    if any(word in text for word in ["design", "editing", "designer"]):
         return "Designing"
 
-    if "study" in text or "student" in text:
+    if any(word in text for word in ["study", "student", "college"]):
         return "Study"
 
-    if "office" in text or "work" in text:
+    if any(word in text for word in ["office", "work", "business"]):
         return "Office"
 
     return None
 
 
 # ============================================================
-# PRODUCT RECOMMENDATION
+# PRODUCT RECOMMENDATION ENGINE
 # ============================================================
 
 def recommend_products(
@@ -484,6 +581,7 @@ def recommend_products(
             )
         ]
 
+    # If no exact match, find closest options
     if result.empty:
 
         result = product_df.copy()
@@ -505,21 +603,32 @@ def recommend_products(
                 ascending=False
             )
 
+    else:
+
+        result = result.sort_values(
+            "rating",
+            ascending=False
+        )
+
     return result.head(3)
 
 
 # ============================================================
-# HERO SECTION
+# HERO
 # ============================================================
 
 st.markdown("""
 <div class="hero">
 
-<h1>💻 Laptop Purchase Assistant</h1>
+<div class="hero-badge">
+🤖 AI-Powered E-Commerce Assistant
+</div>
+
+<h1>💻 Find Your Perfect Laptop</h1>
 
 <p>
-Find the right laptop based on your budget,
-performance needs and intended use.
+Smart laptop recommendations based on your budget,
+performance requirements, preferred brand and intended use.
 </p>
 
 </div>
@@ -527,17 +636,17 @@ performance needs and intended use.
 
 
 # ============================================================
-# SIDEBAR
+# SIDEBAR FILTERS
 # ============================================================
 
-st.sidebar.title("🔎 Find Your Laptop")
+st.sidebar.markdown("## 🔎 Find Your Laptop")
 
-st.sidebar.write(
-    "Set your preferences below."
+st.sidebar.caption(
+    "Use these filters to instantly explore suitable laptops."
 )
 
 budget = st.sidebar.slider(
-    "Maximum Budget",
+    "💰 Maximum Budget",
     min_value=40000,
     max_value=100000,
     value=70000,
@@ -545,13 +654,13 @@ budget = st.sidebar.slider(
 )
 
 ram = st.sidebar.selectbox(
-    "Minimum RAM",
+    "🧠 Minimum RAM",
     [8, 16, 32],
     index=1
 )
 
 use_case = st.sidebar.selectbox(
-    "Primary Use",
+    "🎯 Primary Use",
     [
         "All",
         "Study",
@@ -563,7 +672,7 @@ use_case = st.sidebar.selectbox(
 )
 
 brand = st.sidebar.selectbox(
-    "Preferred Brand",
+    "🏷️ Preferred Brand",
     [
         "All",
         "HP",
@@ -573,7 +682,7 @@ brand = st.sidebar.selectbox(
 )
 
 processor = st.sidebar.selectbox(
-    "Processor Preference",
+    "⚡ Processor",
     [
         "All",
         "Intel Core i3",
@@ -585,7 +694,7 @@ processor = st.sidebar.selectbox(
 
 
 # ============================================================
-# PRODUCT FILTERING
+# FILTER PRODUCTS
 # ============================================================
 
 filtered = product_df[
@@ -616,11 +725,11 @@ if processor != "All":
 
 
 # ============================================================
-# QUICK STATS
+# DASHBOARD STATISTICS
 # ============================================================
 
 st.markdown(
-    '<div class="section-title">Why use the Assistant?</div>',
+    '<div class="section-title">📊 Laptop Marketplace Overview</div>',
     unsafe_allow_html=True
 )
 
@@ -628,47 +737,57 @@ c1, c2, c3, c4 = st.columns(4)
 
 with c1:
 
-    st.markdown("""
-    <div class="feature-box">
-    <h2>💰</h2>
-    <b>Budget Matching</b>
-    <p>Find laptops within your budget.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="stat-card">
+        <div class="stat-number">{len(product_df)}</div>
+        <div class="stat-label">Available Laptops</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 with c2:
 
-    st.markdown("""
-    <div class="feature-box">
-    <h2>⚡</h2>
-    <b>Performance</b>
-    <p>Compare processors and RAM.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="stat-card">
+        <div class="stat-number">{len(filtered)}</div>
+        <div class="stat-label">Matching Results</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 with c3:
 
-    st.markdown("""
-    <div class="feature-box">
-    <h2>⭐</h2>
-    <b>Ratings</b>
-    <p>Explore product ratings.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    avg_rating = product_df["rating"].mean()
+
+    st.markdown(
+        f"""
+        <div class="stat-card">
+        <div class="stat-number">⭐ {avg_rating:.1f}</div>
+        <div class="stat-label">Average Rating</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 with c4:
 
-    st.markdown("""
-    <div class="feature-box">
-    <h2>🤖</h2>
-    <b>AI Assistant</b>
-    <p>Get personalised suggestions.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div class="stat-card">
+        <div class="stat-number">₹{budget//1000}K</div>
+        <div class="stat-label">Your Budget</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # ============================================================
-# PRODUCT SECTION
+# RECOMMENDED PRODUCTS
 # ============================================================
 
 st.markdown(
@@ -679,8 +798,8 @@ st.markdown(
 if filtered.empty:
 
     st.warning(
-        "No exact products match your selected filters. "
-        "Try increasing your budget or changing the filters."
+        "No exact laptops match all your filters. "
+        "Try increasing the budget or reducing the minimum RAM."
     )
 
 else:
@@ -688,7 +807,10 @@ else:
     cols = st.columns(3)
 
     for index, (_, product) in enumerate(
-        filtered.iterrows()
+        filtered.sort_values(
+            "rating",
+            ascending=False
+        ).head(6).iterrows()
     ):
 
         with cols[index % 3]:
@@ -704,45 +826,38 @@ else:
             )
 
             st.markdown(
-                f'<div class="product-title">'
-                f'{product["name"]}</div>',
-                unsafe_allow_html=True
-            )
+                f"""
+                <div class="product-title">
+                {product["name"]}
+                </div>
 
-            st.markdown(
-                f'<div class="product-brand">'
-                f'{product["brand"]}</div>',
-                unsafe_allow_html=True
-            )
+                <div class="product-brand">
+                {product["brand"]}
+                </div>
 
-            st.markdown(
-                f'<div class="product-price">'
-                f'₹{product["price"]:,}</div>',
-                unsafe_allow_html=True
-            )
+                <div class="product-price">
+                ₹{product["price"]:,}
+                </div>
 
-            st.markdown(
-                f'⚙️ **{product["processor"]}**  '
-                f'| 🧠 **{product["ram"]}GB RAM**'
-            )
+                <div class="product-info">
+                ⚡ <b>{product["processor"]}</b><br>
+                🧠 <b>{product["ram"]}GB RAM</b><br>
+                💾 <b>{product["storage"]}</b><br>
+                🎯 <b>{product["use_case"]}</b>
+                </div>
 
-            st.markdown(
-                f'💾 **{product["storage"]}**'
-            )
+                <br>
 
-            st.markdown(
-                f'🎯 **Best for:** {product["use_case"]}'
-            )
-
-            st.markdown(
-                f'<div class="rating">'
-                f'⭐ {product["rating"]}/5</div>',
+                <div class="rating">
+                ⭐ {product["rating"]}/5
+                </div>
+                """,
                 unsafe_allow_html=True
             )
 
             if st.button(
-                "View Reviews",
-                key=f"review_{product['id']}"
+                "⭐ View Reviews",
+                key=f"view_{product['id']}"
             ):
 
                 st.session_state[
@@ -756,18 +871,74 @@ else:
 
 
 # ============================================================
-# REVIEW SECTION
+# QUICK RECOMMENDATION
 # ============================================================
 
 st.markdown(
-    '<div class="section-title">'
-    '⭐ Customer Reviews & Sentiment'
-    '</div>',
+    '<div class="section-title">⚡ Quick Recommendation</div>',
+    unsafe_allow_html=True
+)
+
+recommendations = recommend_products(
+    budget=budget,
+    ram=ram,
+    use_case=None if use_case == "All" else use_case,
+    brand=None if brand == "All" else brand,
+    processor=None if processor == "All" else processor
+)
+
+if not recommendations.empty:
+
+    best = recommendations.iloc[0]
+
+    left, right = st.columns([1, 1])
+
+    with left:
+
+        st.image(
+            best["image"],
+            use_container_width=True
+        )
+
+    with right:
+
+        st.markdown(
+            f"""
+            ## 🏆 {best["name"]}
+
+            **Brand:** {best["brand"]}
+
+            **Price:** ₹{best["price"]:,}
+
+            **Processor:** {best["processor"]}
+
+            **RAM:** {best["ram"]}GB
+
+            **Storage:** {best["storage"]}
+
+            **Best for:** {best["use_case"]}
+
+            **Rating:** ⭐ {best["rating"]}/5
+            """
+        )
+
+        st.success(
+            "This is the highest-rated suitable option "
+            "based on your current preferences."
+        )
+
+
+# ============================================================
+# REVIEWS AND SENTIMENT
+# ============================================================
+
+st.markdown(
+    '<div class="section-title">⭐ Customer Reviews & Sentiment Analysis</div>',
     unsafe_allow_html=True
 )
 
 selected_product = st.selectbox(
-    "Choose a product",
+    "Select a laptop",
     product_df["id"].tolist(),
     format_func=lambda x:
         product_df.loc[
@@ -783,19 +954,16 @@ selected_reviews = review_df[
 for _, review in selected_reviews.iterrows():
 
     if review["sentiment"] == "Positive":
-
         emoji = "😊"
 
     elif review["sentiment"] == "Negative":
-
         emoji = "😞"
 
     else:
-
         emoji = "😐"
 
     st.info(
-        f'{emoji} {review["review"]}  \n'
+        f'{emoji} {review["review"]}\n\n'
         f'**Sentiment: {review["sentiment"]}**'
     )
 
@@ -814,21 +982,80 @@ neutral = sum(
 a, b, c = st.columns(3)
 
 with a:
-    st.metric(
-        "Positive",
-        positive
-    )
+    st.metric("😊 Positive", positive)
 
 with b:
-    st.metric(
-        "Negative",
-        negative
-    )
+    st.metric("😞 Negative", negative)
 
 with c:
-    st.metric(
-        "Neutral",
-        neutral
+    st.metric("😐 Neutral", neutral)
+
+
+# ============================================================
+# PRODUCT COMPARISON
+# ============================================================
+
+st.markdown(
+    '<div class="section-title">⚖️ Compare Laptops</div>',
+    unsafe_allow_html=True
+)
+
+comparison_products = st.multiselect(
+    "Choose up to 3 laptops",
+    product_df["name"].tolist(),
+    max_selections=3
+)
+
+if len(comparison_products) >= 2:
+
+    comparison_df = product_df[
+        product_df["name"].isin(comparison_products)
+    ][
+        [
+            "name",
+            "brand",
+            "price",
+            "processor",
+            "ram",
+            "storage",
+            "use_case",
+            "rating"
+        ]
+    ].copy()
+
+    comparison_df.columns = [
+        "Laptop",
+        "Brand",
+        "Price",
+        "Processor",
+        "RAM",
+        "Storage",
+        "Best For",
+        "Rating"
+    ]
+
+    comparison_df["Price"] = comparison_df[
+        "Price"
+    ].apply(lambda x: f"₹{x:,}")
+
+    comparison_df["RAM"] = comparison_df[
+        "RAM"
+    ].apply(lambda x: f"{x} GB")
+
+    comparison_df["Rating"] = comparison_df[
+        "Rating"
+    ].apply(lambda x: f"⭐ {x}/5")
+
+    st.dataframe(
+        comparison_df,
+        use_container_width=True,
+        hide_index=True
+    )
+
+else:
+
+    st.caption(
+        "Select at least two laptops to compare them."
     )
 
 
@@ -837,9 +1064,30 @@ with c:
 # ============================================================
 
 st.markdown(
-    '<div class="section-title">🤖 Chat with the Assistant</div>',
+    '<div class="section-title">🤖 Chat With Your Laptop Assistant</div>',
     unsafe_allow_html=True
 )
+
+st.markdown(
+    """
+    <div class="info-box">
+    💡 <b>Try asking:</b><br><br>
+    • I need a laptop under ₹70000 for coding<br>
+    • Which laptop has 16GB RAM?<br>
+    • Suggest a gaming laptop<br>
+    • I want an HP laptop under 80000<br>
+    • Which laptop is best for students?<br>
+    • Compare laptops<br>
+    • Show me reviews
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# CHAT MEMORY
+# ============================================================
 
 if "messages" not in st.session_state:
 
@@ -847,36 +1095,48 @@ if "messages" not in st.session_state:
         {
             "role": "assistant",
             "content":
-            "Hello! 👋 Tell me your budget and what "
-            "you mainly use a laptop for."
+            "Hello! 👋 I'm your Laptop Purchase Assistant. "
+            "Tell me your budget, preferred use, RAM, brand or processor "
+            "and I'll recommend suitable laptops."
         }
     ]
 
+
+# Display messages
 
 for message in st.session_state.messages:
 
     if message["role"] == "user":
 
         st.markdown(
-            f'<div class="chat-user">'
-            f'👤 {message["content"]}'
-            f'</div>',
+            f"""
+            <div class="chat-user">
+            👤 {message["content"]}
+            </div>
+            """,
             unsafe_allow_html=True
         )
 
     else:
 
         st.markdown(
-            f'<div class="chat-bot">'
-            f'🤖 {message["content"]}'
-            f'</div>',
+            f"""
+            <div class="chat-bot">
+            🤖 {message["content"]}
+            </div>
+            """,
             unsafe_allow_html=True
         )
 
 
+# ============================================================
+# CHAT INPUT
+# ============================================================
+
 user_input = st.chat_input(
-    "Example: I need a laptop under ₹70000 for coding"
+    "Ask me anything about laptops..."
 )
+
 
 if user_input:
 
@@ -895,12 +1155,22 @@ if user_input:
     user_brand = extract_brand(user_input)
     user_use_case = extract_use_case(user_input)
 
+
+    # --------------------------------------------------------
+    # GREETING
+    # --------------------------------------------------------
+
     if intent == "GREETING":
 
         response = (
-            "Hello! 👋 I can help you choose a laptop. "
-            "Tell me your budget, preferred RAM and intended use."
+            "Hello! 👋 I'm ready to help you find a laptop. "
+            "Tell me your budget and what you mainly want to use it for."
         )
+
+
+    # --------------------------------------------------------
+    # GOODBYE
+    # --------------------------------------------------------
 
     elif intent == "GOODBYE":
 
@@ -909,13 +1179,37 @@ if user_input:
             "Have a great day. 😊"
         )
 
+
+    # --------------------------------------------------------
+    # REVIEWS
+    # --------------------------------------------------------
+
     elif intent == "REVIEW_QUERY":
 
         response = (
-            "You can select a product in the "
-            "Customer Reviews section above to see "
-            "customer feedback and VADER sentiment analysis."
+            "Sure! ⭐ You can select a laptop in the "
+            "'Customer Reviews & Sentiment Analysis' section. "
+            "The system displays customer feedback together with "
+            "VADER sentiment classification."
         )
+
+
+    # --------------------------------------------------------
+    # COMPARISON
+    # --------------------------------------------------------
+
+    elif intent == "COMPARISON":
+
+        response = (
+            "Absolutely! ⚖️ Go to the 'Compare Laptops' section "
+            "and select two or three laptops. The system will compare "
+            "their price, processor, RAM, storage, use case and rating."
+        )
+
+
+    # --------------------------------------------------------
+    # PRODUCT REQUIREMENTS
+    # --------------------------------------------------------
 
     elif any([
         user_budget,
@@ -936,8 +1230,9 @@ if user_input:
         if recommendations.empty:
 
             response = (
-                "I could not find a suitable laptop "
-                "with those exact requirements."
+                "I couldn't find a suitable laptop with those exact "
+                "requirements. Try increasing your budget or reducing "
+                "the RAM requirement."
             )
 
         else:
@@ -945,54 +1240,88 @@ if user_input:
             best = recommendations.iloc[0]
 
             response = (
-                f"Based on your requirements, I recommend "
-                f"**{best['name']}**. 💻\n\n"
+                f"### 💻 My Recommendation\n\n"
+                f"**{best['name']}**\n\n"
                 f"💰 Price: ₹{best['price']:,}\n\n"
-                f"⚙️ Processor: {best['processor']}\n\n"
+                f"⚡ Processor: {best['processor']}\n\n"
                 f"🧠 RAM: {best['ram']}GB\n\n"
+                f"💾 Storage: {best['storage']}\n\n"
                 f"🎯 Best for: {best['use_case']}\n\n"
-                f"⭐ Rating: {best['rating']}/5"
+                f"⭐ Rating: {best['rating']}/5\n\n"
+                f"📸 I've displayed this laptop in the "
+                f"recommendation section above."
             )
+
+
+    # --------------------------------------------------------
+    # GENERAL RECOMMENDATION
+    # --------------------------------------------------------
 
     elif intent == "RECOMMENDATION":
 
-        if filtered.empty:
+        recommendations = recommend_products(
+            budget=budget,
+            ram=ram
+        )
+
+        if recommendations.empty:
 
             response = (
-                "I couldn't find an exact match. "
+                "I couldn't find a suitable recommendation. "
                 "Try changing the filters."
             )
 
         else:
 
-            best = filtered.sort_values(
-                "rating",
-                ascending=False
-            ).iloc[0]
+            best = recommendations.iloc[0]
 
             response = (
-                f"My top recommendation is "
-                f"**{best['name']}**. 💻 "
-                f"It costs ₹{best['price']:,}, has "
-                f"{best['ram']}GB RAM and a "
-                f"{best['processor']} processor."
+                f"🏆 **My top recommendation is {best['name']}!**\n\n"
+                f"💰 ₹{best['price']:,}\n\n"
+                f"⚡ {best['processor']}\n\n"
+                f"🧠 {best['ram']}GB RAM\n\n"
+                f"💾 {best['storage']}\n\n"
+                f"🎯 Best for {best['use_case']}\n\n"
+                f"⭐ {best['rating']}/5\n\n"
+                f"The product image is displayed above."
             )
+
+
+    # --------------------------------------------------------
+    # BUDGET QUESTION
+    # --------------------------------------------------------
 
     elif intent == "BUDGET":
 
         response = (
-            f"Your current selected budget is "
-            f"₹{budget:,}. You can adjust it using "
-            f"the sidebar."
+            f"💰 Your current maximum budget is "
+            f"₹{budget:,}. You can change it using the "
+            f"budget slider in the sidebar."
         )
+
+
+    # --------------------------------------------------------
+    # FALLBACK
+    # --------------------------------------------------------
 
     else:
 
         response = (
-            "I can help you with laptop prices, "
-            "RAM, processors, brands, use cases, "
-            "reviews and recommendations."
+            "I can help you with:\n\n"
+            "💰 Laptop prices and budgets\n"
+            "🧠 RAM requirements\n"
+            "⚡ Processors\n"
+            "🏷️ Brands\n"
+            "🎯 Study, office, coding, gaming and designing\n"
+            "⭐ Customer reviews\n"
+            "⚖️ Laptop comparisons\n"
+            "🏆 Product recommendations\n\n"
+            "Try asking something like: "
+            "'Recommend a laptop under ₹70000 for coding with 16GB RAM.'"
         )
+
+
+    # Save response
 
     st.session_state.messages.append(
         {
@@ -1012,11 +1341,20 @@ st.markdown("---")
 
 st.markdown(
     """
-    <div style="text-align:center; color:#6b7280;">
-    <b>AI-Powered E-Commerce Chatbot</b><br>
-    Laptop Purchase Assistant | CA4 Project<br>
-    Developed by M S Prajana
+    <div class="footer">
+
+    <b>🤖 AI-Powered E-Commerce Chatbot</b>
+
+    <br>
+
+    Laptop Purchase Assistant | CA4 Project
+
+    <br>
+
+    Developed by <b>M S Prajana</b>
+
     </div>
     """,
     unsafe_allow_html=True
 )
+```
